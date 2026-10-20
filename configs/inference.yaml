@@ -1,0 +1,3 @@
+inference:
+  input_path: data/sample
+  output_path: outputs/predictions
