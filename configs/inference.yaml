@@ -1,0 +1,3 @@
+# Inference configuration placeholder
+device: cpu
+batch_size: 16

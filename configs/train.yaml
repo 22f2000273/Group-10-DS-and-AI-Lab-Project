@@ -1,0 +1,4 @@
+# Training configuration placeholder
+seed: 42
+batch_size: 32
+epochs: 10
