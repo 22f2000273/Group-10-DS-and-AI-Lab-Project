@@ -1,3 +1,10 @@
-# Add project dependencies here, e.g.
-# pandas==2.2.2
-# scikit-learn==1.5.1
+torch
+torchvision
+numpy
+pillow
+pandas
+pytest
+segmentation-models-pytorch  # optional: only needed for --arch smp_unet
+# NOTE: install the PyTorch build matching your CUDA first, e.g.
+#   pip install torch --index-url https://download.pytorch.org/whl/cu124
+# then: pip install -r requirements.txt
