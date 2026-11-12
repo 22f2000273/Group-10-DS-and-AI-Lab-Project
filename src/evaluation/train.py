@@ -83,6 +83,9 @@ def make_args_parser():
     p.add_argument("--resume", type=str, default=None, help="path to last.pt to resume")
     p.add_argument("--dry_run", action="store_true",
                    help="tiny settings (8 tiles/split, 2 epochs, batch 2, crop 256) but the FULL flow")
+    p.add_argument("--max_steps", type=int, default=None,
+                   help="stop training after exactly N optimiser steps, counted across epochs "
+                        "(equal-budget experiments); scheduler steps per optimiser step when set")
     return p
 
 
@@ -96,12 +99,18 @@ def build_optimizer(name, model, lr, wd):
     raise ValueError(f"unknown optimizer {name}")
 
 
-def build_scheduler(name, opt, epochs):
+def build_scheduler(name, opt, epochs, steps=None):
+    """When `steps` (max_steps) is given, the schedule is built per optimiser
+    step instead of per epoch, so it covers the whole step budget."""
     if name == "none":
         return None
     if name == "cosine":
+        if steps is not None:
+            return torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(1, steps))
         return torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(1, epochs))
     if name == "step":
+        if steps is not None:
+            return torch.optim.lr_scheduler.StepLR(opt, step_size=max(1, steps // 3), gamma=0.1)
         return torch.optim.lr_scheduler.StepLR(opt, step_size=max(1, epochs // 3), gamma=0.1)
     raise ValueError(f"unknown scheduler {name}")
 
@@ -127,13 +136,14 @@ def quick_val(model, loader, device):
 
 
 def save_checkpoint(path, model, optimizer, scheduler, scaler, epoch, best_iou,
-                    patience_ctr, seed):
+                    patience_ctr, seed, step):
     torch.save({
         "model": model.state_dict(),
         "optimizer": optimizer.state_dict(),
         "scheduler": scheduler.state_dict() if scheduler else None,
         "scaler": scaler.state_dict() if scaler else None,
         "epoch": epoch,
+        "step": step,
         "best_val_iou": best_iou,
         "patience_counter": patience_ctr,
         "rng": {
@@ -199,15 +209,17 @@ def main(argv=None):
 
     criterion = BCEDice()
     optimizer = build_optimizer(args.optimizer, model, args.lr, args.weight_decay)
-    scheduler = build_scheduler(args.scheduler, optimizer, args.epochs)
+    scheduler = build_scheduler(args.scheduler, optimizer, args.epochs, steps=args.max_steps)
     scaler = torch.amp.GradScaler("cuda", enabled=(args.amp and device.type == "cuda"))
 
     start_epoch, best_iou, patience_ctr = 1, -1.0, 0
+    start_step = 0
     if args.resume:
         if not Path(args.resume).exists():
             raise FileNotFoundError(f"--resume checkpoint not found: {args.resume}")
         ckpt = load_checkpoint(args.resume, model, optimizer, scheduler, scaler)
         start_epoch = ckpt["epoch"] + 1
+        start_step = ckpt.get("step", 0)
         best_iou = ckpt["best_val_iou"]
         patience_ctr = ckpt["patience_counter"]
         if ckpt.get("rng", {}).get("python"):
@@ -216,9 +228,11 @@ def main(argv=None):
             torch.set_rng_state(ckpt["rng"]["torch"])
             if torch.cuda.is_available() and ckpt["rng"]["cuda"]:
                 torch.cuda.set_rng_state_all(ckpt["rng"]["cuda"])
-        print(f"resumed from {args.resume}: next epoch {start_epoch}, best val IoU {best_iou:.4f}")
+        print(f"resumed from {args.resume}: next epoch {start_epoch}, step {start_step}, best val IoU {best_iou:.4f}")
 
     log_rows = []
+    total_steps = start_step
+    stopped_by_steps = False
     for epoch in range(start_epoch, args.epochs + 1):
         model.train()
         t0, total_loss, n_batches = time.time(), 0.0, 0
@@ -232,22 +246,30 @@ def main(argv=None):
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
+            total_steps += 1
             total_loss += float(loss.item())
             n_batches += 1
-        if scheduler:
+            # with a step budget the scheduler advances per optimiser step
+            if scheduler and args.max_steps:
+                scheduler.step()
+            if args.max_steps and total_steps >= args.max_steps:
+                stopped_by_steps = True
+                break
+        if scheduler and not args.max_steps:
             scheduler.step()
 
         val_loss, val_iou, val_f1 = quick_val(model, val_ld, device)
         lr_now = optimizer.param_groups[0]["lr"]
         secs = time.time() - t0
-        print(f"epoch {epoch}/{args.epochs} | train_loss {total_loss/max(1,n_batches):.4f} | "
+        print(f"epoch {epoch}/{args.epochs} | step {total_steps} | train_loss {total_loss/max(1,n_batches):.4f} | "
               f"val_loss {val_loss:.4f} | val_IoU {val_iou:.4f} | val_F1 {val_f1:.4f} | "
               f"lr {lr_now:.2e} | {secs:.1f}s")
-        log_rows.append([epoch, f"{total_loss/max(1,n_batches):.6f}", f"{val_loss:.6f}",
-                         f"{val_iou:.6f}", f"{val_f1:.6f}", f"{lr_now:.2e}", f"{secs:.2f}"])
+        log_rows.append([epoch, total_steps, f"{total_loss/max(1,n_batches):.6f}",
+                         f"{val_loss:.6f}", f"{val_iou:.6f}", f"{val_f1:.6f}",
+                         f"{lr_now:.2e}", f"{secs:.2f}"])
 
         save_checkpoint(out / "last.pt", model, optimizer, scheduler, scaler,
-                        epoch, max(best_iou, val_iou), patience_ctr, args.seed)
+                        epoch, max(best_iou, val_iou), patience_ctr, args.seed, total_steps)
         if val_iou > best_iou:
             best_iou, patience_ctr = val_iou, 0
             torch.save({"model": model.state_dict(), "epoch": epoch, "val_iou": val_iou},
@@ -258,11 +280,19 @@ def main(argv=None):
             if patience_ctr >= args.patience:
                 print(f"early stopping at epoch {epoch} (no val-IoU gain for {args.patience} epochs)")
                 break
+        if stopped_by_steps:
+            print(f"max_steps {args.max_steps} reached after {total_steps} optimiser steps "
+                  f"(stopped mid-training at epoch {epoch})")
+            break
 
     with open(out / "log.csv", "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["epoch", "train_loss", "val_loss", "val_iou", "val_f1", "lr", "seconds"])
+        w.writerow(["epoch", "step", "train_loss", "val_loss", "val_iou", "val_f1", "lr", "seconds"])
         w.writerows(log_rows)
+
+    # record the number of optimiser steps actually completed in config.json
+    config["steps_completed"] = total_steps
+    (out / "config.json").write_text(json.dumps(config, indent=2))
 
     best_path = out / "best.pt"
     if best_path.exists():

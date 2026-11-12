@@ -30,6 +30,11 @@ env/
 !/outputs/figures/.gitkeep
 !/outputs/logs/.gitkeep
 
+# Training run artifacts
+runs/
+runs_smoke/
+*.pt
+
 # OS/IDE
 .DS_Store
 .vscode/
