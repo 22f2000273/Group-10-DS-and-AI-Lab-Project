@@ -1,0 +1,14 @@
+Baseline run: unet_whu_seed42 (Protocol A, seed 42, WHU)
+=======================================================
+Best epoch:      39 (of 50)
+Best val IoU:    0.8851
+Optimiser steps: 29,008 (50 epochs x 592 steps)
+Wall time:       ~2.7 h (8713.8s train+val across 50 epochs + ~2 min test eval; 177.5s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.8624  (F1 0.9261)
+  inria: 0.3677  (F1 0.5377)
+  mass : 0.3959  (F1 0.5672)
+
+No incidents. Outputs: runs/baseline/unet_whu_seed42/{config.json, log.csv,
+best.pt, last.pt, results.json}.

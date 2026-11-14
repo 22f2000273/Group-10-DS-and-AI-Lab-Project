@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # repo root
 import numpy as np
 import torch
 import torch.nn as nn
+from torch.utils.data import Subset
 
 from src.data.dataset import FOLDER_OF_KEY, TileDataset, make_loader
 from src.evaluation.evaluate import evaluate_model
@@ -86,6 +87,12 @@ def make_args_parser():
     p.add_argument("--max_steps", type=int, default=None,
                    help="stop training after exactly N optimiser steps, counted across epochs "
                         "(equal-budget experiments); scheduler steps per optimiser step when set")
+    p.add_argument("--subset_size", type=int, default=None,
+                   help="train on a random subset of N tiles from the training split only "
+                        "(Phase 5 subset control)")
+    p.add_argument("--subset_seed", type=int, default=42,
+                   help="seed for the --subset_size draw (chosen tile names are written to "
+                        "subset_tiles.txt in the run folder)")
     return p
 
 
@@ -199,6 +206,16 @@ def main(argv=None):
     train_ds = TileDataset(args.data_root, args.train_set, "train",
                            augment=True, crop=args.crop,
                            max_tiles=8 if args.dry_run else None)
+    if args.subset_size:
+        full_n = len(train_ds)
+        n = min(args.subset_size, full_n)
+        rng = random.Random(args.subset_seed)
+        idx = sorted(rng.sample(range(full_n), n))
+        (out / "subset_tiles.txt").write_text(
+            "\n".join(train_ds.pairs[i][0].name for i in idx) + "\n")
+        train_ds = Subset(train_ds, idx)
+        print(f"subset: using {n} of {full_n} training tiles "
+              f"(subset_seed {args.subset_seed}) -> subset_tiles.txt")
     val_ds = TileDataset(args.data_root, args.train_set, "validation",
                          max_tiles=8 if args.dry_run else None)
     train_ld = make_loader(train_ds, batch_size=args.batch_size, shuffle=True,

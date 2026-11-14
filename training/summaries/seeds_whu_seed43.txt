@@ -1,0 +1,14 @@
+Seed repeat: unet_whu_seed43 (Protocol A, seed 43, WHU)
+=======================================================
+Best epoch:      44 (of 50)
+Best val IoU:    0.8868
+Optimiser steps: 29,600
+Wall time:       ~2.7 h (8889.2s train+val + test eval; 177.6s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.8681  (F1 0.9294)
+  inria: 0.4033  (F1 0.5748)
+  mass : 0.3847  (F1 0.5556)
+
+No incidents. Outputs: runs/seeds/unet_whu_seed43/{config.json, log.csv,
+best.pt, last.pt, results.json}.

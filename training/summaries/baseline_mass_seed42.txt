@@ -1,0 +1,18 @@
+Baseline run: unet_mass_seed42 (Protocol A, seed 42, Massachusetts)
+=======================================================
+Best epoch:      43 (of 50)
+Best val IoU:    0.6569
+Optimiser steps: 3450 (50 epochs x 69 steps)  <-- this is budget B for Phase 4
+Wall time:       ~20 min (incl. one crash+resume; 1011.8s train+val + ~2 min test eval)
+
+Test IoU (best.pt, threshold 0.5):
+  mass : 0.6665  (F1 0.7999)
+  whu  : 0.5687  (F1 0.7251)
+  inria: 0.1995  (F1 0.3326)
+
+Incident: first launch died at epoch 2 (killed by tool-call timeout, process
+group issue). Epoch 1 had completed; resumed from last.pt with setsid and
+finished all 50 epochs. Recorded in training/PROGRESS.md.
+
+Outputs: runs/baseline/unet_mass_seed42/{config.json, log.csv, best.pt,
+last.pt, results.json} — small files committed later, checkpoints stay here.

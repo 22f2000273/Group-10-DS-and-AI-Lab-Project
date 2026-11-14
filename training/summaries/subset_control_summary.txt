@@ -1,0 +1,30 @@
+Subset control summary (Phase 5) — 548-tile subsets, seed 42, subset seeds 1/2/3
+================================================================================
+All values: test IoU of the best-val-IoU checkpoint (threshold 0.5).
+
+| Train data            | -> whu         | -> inria       | -> mass        |
+|-----------------------|----------------|----------------|----------------|
+| Mass 548 (baseline)   | 0.5687         | 0.1995         | 0.6665         |
+| WHU 548 x3 subsets    | 0.7868±0.0451  | 0.2222±0.0394  | 0.3194±0.0506  |
+| WHU 4,736 (full)      | 0.8624         | 0.3677         | 0.3959         |
+| Inria 548 x3 subsets  | 0.4956±0.0554  | 0.5843±0.0250  | 0.2877±0.0237  |
+| Inria 10,530 (full)   | 0.6968         | 0.7169         | 0.3052         |
+
+Per-run in-domain results:
+  Inria 548: s1 0.6078, s2 0.5580, s3 0.5871   (full-data 0.7169)
+  WHU   548: s1 0.7363, s2 0.8230, s3 0.8010   (full-data 0.8624)
+
+Readings:
+1. Equal tile counts, different datasets: WHU-548 (0.7868) > Inria-548
+   (0.5843) > Mass-548 (0.6665, single draw). WHU tiles are more
+   informative per tile than Inria tiles; Mass sits between on its
+   single draw but with only 16 val tiles its number is noisy.
+2. Data scaling: 548 tiles recover ~91% of WHU's full-data in-domain
+   IoU (0.7868/0.8624) and ~81% of Inria's (0.5843/0.7169).
+3. Subset-draw spread is real: WHU range 0.087 (0.7363-0.8230),
+   Inria range 0.050 (0.5580-0.6078) - which 548 tiles you get matters,
+   especially for WHU (early-stopped s1 had 1,656 steps vs 3,450).
+4. Cross-dataset transfer stays poor at 548 tiles and is very
+   draw-dependent (WHU->inria 0.177-0.250 across draws).
+
+Runs: runs/subset/unet_{inria,whu}_subset548_s{1,2,3}/ (subset_tiles.txt in each).

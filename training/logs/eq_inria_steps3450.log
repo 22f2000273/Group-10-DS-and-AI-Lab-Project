@@ -1,0 +1,14 @@
+Device: cuda (NVIDIA L40S)
+params: 31,037,633
+train tiles: 10530, validation tiles: 2025
+epoch 1/50 | step 1317 | train_loss 0.9279 | val_loss 0.8993 | val_IoU 0.4648 | val_F1 0.6346 | lr 6.82e-04 | 415.0s
+  -> best.pt saved (val IoU 0.4648)
+epoch 2/50 | step 2634 | train_loss 0.7162 | val_loss 0.7083 | val_IoU 0.6252 | val_F1 0.7694 | lr 1.32e-04 | 394.6s
+  -> best.pt saved (val IoU 0.6252)
+epoch 3/50 | step 3450 | train_loss 0.6374 | val_loss 0.6694 | val_IoU 0.6461 | val_F1 0.7850 | lr 0.00e+00 | 250.5s
+  -> best.pt saved (val IoU 0.6461)
+max_steps 3450 reached after 3450 optimiser steps (stopped mid-training at epoch 3)
+TEST whu: IoU 0.5782 F1 0.7327 (n=2416 tiles)
+TEST inria: IoU 0.6314 F1 0.7740 (n=2025 tiles)
+TEST mass: IoU 0.3411 F1 0.5086 (n=40 tiles)
+results.json written to runs/equal_budget/unet_inria_steps3450/results.json

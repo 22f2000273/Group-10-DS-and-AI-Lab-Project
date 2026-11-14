@@ -1,0 +1,14 @@
+Seed repeat: unet_mass_seed43 (Protocol A, seed 43, Massachusetts)
+=======================================================
+Best epoch:      41 (of 50)
+Best val IoU:    0.6543
+Optimiser steps: 3,450
+Wall time:       ~18 min (1035.3s train+val + test eval)
+
+Test IoU (best.pt, threshold 0.5):
+  mass : 0.6640  (F1 0.7981)
+  whu  : 0.5943  (F1 0.7455)
+  inria: 0.2090  (F1 0.3458)
+
+No incidents. Outputs: runs/seeds/unet_mass_seed43/{config.json, log.csv,
+best.pt, last.pt, results.json}.

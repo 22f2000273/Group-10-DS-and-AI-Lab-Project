@@ -1,0 +1,74 @@
+Device: cuda (NVIDIA L40S)
+params: 31,037,633
+train tiles: 10530, validation tiles: 2025
+epoch 1/50 | step 1317 | train_loss 0.9460 | val_loss 0.9018 | val_IoU 0.4486 | val_F1 0.6194 | lr 9.99e-04 | 414.8s
+  -> best.pt saved (val IoU 0.4486)
+epoch 2/50 | step 2634 | train_loss 0.7567 | val_loss 0.7964 | val_IoU 0.5559 | val_F1 0.7146 | lr 9.96e-04 | 394.5s
+  -> best.pt saved (val IoU 0.5559)
+epoch 3/50 | step 3951 | train_loss 0.6913 | val_loss 0.6246 | val_IoU 0.5675 | val_F1 0.7241 | lr 9.91e-04 | 394.2s
+  -> best.pt saved (val IoU 0.5675)
+epoch 4/50 | step 5268 | train_loss 0.6368 | val_loss 0.9028 | val_IoU 0.4733 | val_F1 0.6425 | lr 9.84e-04 | 394.0s
+epoch 5/50 | step 6585 | train_loss 0.6142 | val_loss 0.5394 | val_IoU 0.6071 | val_F1 0.7555 | lr 9.76e-04 | 394.0s
+  -> best.pt saved (val IoU 0.6071)
+epoch 6/50 | step 7902 | train_loss 0.5735 | val_loss 0.6117 | val_IoU 0.6101 | val_F1 0.7578 | lr 9.65e-04 | 394.0s
+  -> best.pt saved (val IoU 0.6101)
+epoch 7/50 | step 9219 | train_loss 0.5543 | val_loss 0.5120 | val_IoU 0.6431 | val_F1 0.7828 | lr 9.52e-04 | 393.9s
+  -> best.pt saved (val IoU 0.6431)
+epoch 8/50 | step 10536 | train_loss 0.5390 | val_loss 0.5552 | val_IoU 0.6193 | val_F1 0.7649 | lr 9.38e-04 | 393.9s
+epoch 9/50 | step 11853 | train_loss 0.5456 | val_loss 0.5788 | val_IoU 0.6033 | val_F1 0.7526 | lr 9.22e-04 | 393.8s
+epoch 10/50 | step 13170 | train_loss 0.5038 | val_loss 0.4970 | val_IoU 0.6733 | val_F1 0.8048 | lr 9.05e-04 | 393.9s
+  -> best.pt saved (val IoU 0.6733)
+epoch 11/50 | step 14487 | train_loss 0.5049 | val_loss 0.5302 | val_IoU 0.6457 | val_F1 0.7847 | lr 8.85e-04 | 394.1s
+epoch 12/50 | step 15804 | train_loss 0.4826 | val_loss 0.6065 | val_IoU 0.5793 | val_F1 0.7336 | lr 8.64e-04 | 394.1s
+epoch 13/50 | step 17121 | train_loss 0.5004 | val_loss 0.5093 | val_IoU 0.6665 | val_F1 0.7999 | lr 8.42e-04 | 394.1s
+epoch 14/50 | step 18438 | train_loss 0.4712 | val_loss 0.4890 | val_IoU 0.6818 | val_F1 0.8108 | lr 8.19e-04 | 394.0s
+  -> best.pt saved (val IoU 0.6818)
+epoch 15/50 | step 19755 | train_loss 0.4633 | val_loss 0.4627 | val_IoU 0.6757 | val_F1 0.8065 | lr 7.94e-04 | 393.8s
+epoch 16/50 | step 21072 | train_loss 0.4599 | val_loss 0.4475 | val_IoU 0.6759 | val_F1 0.8066 | lr 7.68e-04 | 394.0s
+epoch 17/50 | step 22389 | train_loss 0.4494 | val_loss 0.4719 | val_IoU 0.6492 | val_F1 0.7873 | lr 7.41e-04 | 393.9s
+epoch 18/50 | step 23706 | train_loss 0.4470 | val_loss 0.4765 | val_IoU 0.6872 | val_F1 0.8146 | lr 7.13e-04 | 393.9s
+  -> best.pt saved (val IoU 0.6872)
+epoch 19/50 | step 25023 | train_loss 0.4425 | val_loss 0.4364 | val_IoU 0.6978 | val_F1 0.8220 | lr 6.84e-04 | 393.8s
+  -> best.pt saved (val IoU 0.6978)
+epoch 20/50 | step 26340 | train_loss 0.4452 | val_loss 0.6648 | val_IoU 0.6082 | val_F1 0.7564 | lr 6.55e-04 | 394.1s
+epoch 21/50 | step 27657 | train_loss 0.4275 | val_loss 0.4499 | val_IoU 0.6822 | val_F1 0.8111 | lr 6.24e-04 | 394.0s
+epoch 22/50 | step 28974 | train_loss 0.4169 | val_loss 0.4345 | val_IoU 0.7004 | val_F1 0.8238 | lr 5.94e-04 | 393.9s
+  -> best.pt saved (val IoU 0.7004)
+epoch 23/50 | step 30291 | train_loss 0.4122 | val_loss 0.4866 | val_IoU 0.6588 | val_F1 0.7943 | lr 5.63e-04 | 393.9s
+epoch 24/50 | step 31608 | train_loss 0.4119 | val_loss 0.4682 | val_IoU 0.6601 | val_F1 0.7952 | lr 5.31e-04 | 393.9s
+epoch 25/50 | step 32925 | train_loss 0.4025 | val_loss 0.4381 | val_IoU 0.6828 | val_F1 0.8115 | lr 5.00e-04 | 394.0s
+epoch 26/50 | step 34242 | train_loss 0.4090 | val_loss 0.4599 | val_IoU 0.6878 | val_F1 0.8151 | lr 4.69e-04 | 393.9s
+epoch 27/50 | step 35559 | train_loss 0.3972 | val_loss 0.4179 | val_IoU 0.7054 | val_F1 0.8272 | lr 4.37e-04 | 394.0s
+  -> best.pt saved (val IoU 0.7054)
+epoch 28/50 | step 36876 | train_loss 0.3924 | val_loss 0.4057 | val_IoU 0.7090 | val_F1 0.8297 | lr 4.06e-04 | 394.1s
+  -> best.pt saved (val IoU 0.7090)
+epoch 29/50 | step 38193 | train_loss 0.3874 | val_loss 0.4271 | val_IoU 0.7054 | val_F1 0.8272 | lr 3.76e-04 | 394.0s
+epoch 30/50 | step 39510 | train_loss 0.3814 | val_loss 0.4071 | val_IoU 0.7176 | val_F1 0.8356 | lr 3.45e-04 | 393.9s
+  -> best.pt saved (val IoU 0.7176)
+epoch 31/50 | step 40827 | train_loss 0.3761 | val_loss 0.4094 | val_IoU 0.7188 | val_F1 0.8364 | lr 3.16e-04 | 393.9s
+  -> best.pt saved (val IoU 0.7188)
+epoch 32/50 | step 42144 | train_loss 0.3712 | val_loss 0.4194 | val_IoU 0.7117 | val_F1 0.8316 | lr 2.87e-04 | 394.0s
+epoch 33/50 | step 43461 | train_loss 0.3743 | val_loss 0.4396 | val_IoU 0.6815 | val_F1 0.8106 | lr 2.59e-04 | 393.9s
+epoch 34/50 | step 44778 | train_loss 0.3677 | val_loss 0.4014 | val_IoU 0.7069 | val_F1 0.8283 | lr 2.32e-04 | 393.9s
+epoch 35/50 | step 46095 | train_loss 0.3674 | val_loss 0.3931 | val_IoU 0.7244 | val_F1 0.8402 | lr 2.06e-04 | 393.8s
+  -> best.pt saved (val IoU 0.7244)
+epoch 36/50 | step 47412 | train_loss 0.3601 | val_loss 0.4281 | val_IoU 0.7045 | val_F1 0.8266 | lr 1.81e-04 | 393.9s
+epoch 37/50 | step 48729 | train_loss 0.3584 | val_loss 0.3896 | val_IoU 0.7152 | val_F1 0.8340 | lr 1.58e-04 | 393.9s
+epoch 38/50 | step 50046 | train_loss 0.3562 | val_loss 0.4307 | val_IoU 0.7086 | val_F1 0.8295 | lr 1.36e-04 | 393.9s
+epoch 39/50 | step 51363 | train_loss 0.3528 | val_loss 0.4268 | val_IoU 0.7164 | val_F1 0.8348 | lr 1.15e-04 | 394.0s
+epoch 40/50 | step 52680 | train_loss 0.3511 | val_loss 0.4785 | val_IoU 0.6770 | val_F1 0.8074 | lr 9.55e-05 | 393.8s
+epoch 41/50 | step 53997 | train_loss 0.3493 | val_loss 0.4222 | val_IoU 0.7201 | val_F1 0.8373 | lr 7.78e-05 | 394.0s
+epoch 42/50 | step 55314 | train_loss 0.3472 | val_loss 0.4106 | val_IoU 0.7149 | val_F1 0.8338 | lr 6.18e-05 | 394.0s
+epoch 43/50 | step 56631 | train_loss 0.3455 | val_loss 0.4329 | val_IoU 0.7140 | val_F1 0.8331 | lr 4.76e-05 | 394.0s
+epoch 44/50 | step 57948 | train_loss 0.3452 | val_loss 0.3923 | val_IoU 0.7293 | val_F1 0.8434 | lr 3.51e-05 | 394.0s
+  -> best.pt saved (val IoU 0.7293)
+epoch 45/50 | step 59265 | train_loss 0.3426 | val_loss 0.3860 | val_IoU 0.7264 | val_F1 0.8415 | lr 2.45e-05 | 394.1s
+epoch 46/50 | step 60582 | train_loss 0.3409 | val_loss 0.4323 | val_IoU 0.7175 | val_F1 0.8355 | lr 1.57e-05 | 394.0s
+epoch 47/50 | step 61899 | train_loss 0.3406 | val_loss 0.3968 | val_IoU 0.7227 | val_F1 0.8390 | lr 8.86e-06 | 394.1s
+epoch 48/50 | step 63216 | train_loss 0.3403 | val_loss 0.4310 | val_IoU 0.7121 | val_F1 0.8319 | lr 3.94e-06 | 394.0s
+epoch 49/50 | step 64533 | train_loss 0.3394 | val_loss 0.3870 | val_IoU 0.7271 | val_F1 0.8420 | lr 9.87e-07 | 394.1s
+epoch 50/50 | step 65850 | train_loss 0.3407 | val_loss 0.4403 | val_IoU 0.7035 | val_F1 0.8259 | lr 0.00e+00 | 394.2s
+TEST whu: IoU 0.6968 F1 0.8213 (n=2416 tiles)
+TEST inria: IoU 0.7169 F1 0.8351 (n=2025 tiles)
+TEST mass: IoU 0.3052 F1 0.4677 (n=40 tiles)
+results.json written to runs/baseline/unet_inria_seed42/results.json

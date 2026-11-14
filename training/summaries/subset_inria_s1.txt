@@ -1,0 +1,14 @@
+Subset control: unet_inria_subset548_s1 (Protocol A + 548-tile subset, seed 42, subset_seed 1)
+=======================================================
+Best epoch:      46 (of 50)
+Best val IoU:    0.6193
+Optimiser steps: 3,450 (50 epochs x 69 steps)
+Wall time:       ~31 min (1765.4s train+val + test eval)
+Subset:          548 of 10,530 Inria train tiles (subset_tiles.txt in run folder)
+
+Test IoU (best.pt, threshold 0.5):
+  inria: 0.6078  (F1 0.7561)
+  whu  : 0.5314  (F1 0.6940)
+  mass : 0.2913  (F1 0.4512)
+
+vs full Inria baseline (10,530 tiles): inria 0.7169 -> 0.6078 with 5% of the data.

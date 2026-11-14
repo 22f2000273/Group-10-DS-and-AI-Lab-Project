@@ -1,0 +1,17 @@
+{
+  "checkpoint": "training/probe/timing_probe/best.pt",
+  "split": "test",
+  "results": {
+    "whu": {
+      "iou": 0.594622418991401,
+      "precision": 0.731821607667023,
+      "recall": 0.7602907713124125,
+      "f1": 0.7457845969173064,
+      "tp": 53584033,
+      "fp": 19636042,
+      "fn": 16894309,
+      "tn": 543225520,
+      "n_pixels": 633339904
+    }
+  }
+}

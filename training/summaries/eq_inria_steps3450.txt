@@ -1,0 +1,17 @@
+Equal-budget run: unet_inria_steps3450 (Protocol B, seed 42, Inria)
+=======================================================
+Budget B:        3,450 optimiser steps (Mass seed42 baseline budget)
+Best epoch:      3 (stopped mid-epoch 3 at exactly 3,450 steps)
+Best val IoU:    0.6461
+Wall time:       ~19 min (1060.0s train+val + test eval; scheduler stepped per optimiser step)
+
+Test IoU (best.pt, threshold 0.5):
+  inria: 0.6314  (F1 0.7740)
+  whu  : 0.5782  (F1 0.7327)
+  mass : 0.3411  (F1 0.5086)
+
+Comparison vs full Inria baseline (50 epochs, 65,850 steps): inria 0.7169 ->
+  0.6314 at 5% of the budget.
+
+Outputs: runs/equal_budget/unet_inria_steps3450/{config.json, log.csv,
+best.pt, last.pt, results.json}.

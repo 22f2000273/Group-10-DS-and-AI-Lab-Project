@@ -1,0 +1,14 @@
+Subset control: unet_whu_subset548_s2 (Protocol A + 548-tile subset, seed 42, subset_seed 2)
+=======================================================
+Best epoch:      48 (of 50)
+Best val IoU:    0.8317
+Optimiser steps: 3,450
+Wall time:       ~25 min (1361.7s train+val + test eval)
+Subset:          548 of 4,736 WHU train tiles (subset_tiles.txt in run folder)
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.8230  (F1 0.9029)
+  inria: 0.2390  (F1 0.3858)
+  mass : 0.3679  (F1 0.5379)
+
+Subset draws differ strongly: s1 whu-test 0.7363, s2 0.8230.

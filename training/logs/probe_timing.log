@@ -1,0 +1,10 @@
+Device: cuda (NVIDIA L40S)
+params: 31,037,633
+train tiles: 4736, validation tiles: 1036
+epoch 1/1 | step 63 | train_loss 0.9168 | val_loss 0.9015 | val_IoU 0.6134 | val_F1 0.7604 | lr 0.00e+00 | 37.7s
+  -> best.pt saved (val IoU 0.6134)
+max_steps 63 reached after 63 optimiser steps (stopped mid-training at epoch 1)
+TEST whu: IoU 0.5947 F1 0.7459 (n=2416 tiles)
+TEST inria: IoU 0.1273 F1 0.2259 (n=2025 tiles)
+TEST mass: IoU 0.2215 F1 0.3627 (n=40 tiles)
+results.json written to training/probe/timing_probe/results.json

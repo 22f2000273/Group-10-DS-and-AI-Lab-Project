@@ -1,0 +1,17 @@
+Seed repeat: unet_inria_seed44 (Protocol A, seed 44, Inria)
+=======================================================
+Best epoch:      40 (of 50, then early stop triggered at 50)
+Best val IoU:    0.7318
+Optimiser steps: 65,850
+Wall time:       ~5.6 h (19712.8s train+val + test eval; 394s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  inria: 0.7169  (F1 0.8351)
+  whu  : 0.6650  (F1 0.7988)
+  mass : 0.3499  (F1 0.5185)
+
+Inria across seeds 42/43/44 — val IoU 0.7293/0.7290/0.7318, in-domain test
+0.7169/0.7168/0.7169: extremely stable.
+
+No incidents. Outputs: runs/seeds/unet_inria_seed44/{config.json, log.csv,
+best.pt, last.pt, results.json}.

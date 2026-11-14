@@ -1,0 +1,17 @@
+Equal-budget run: unet_whu_steps3450 (Protocol B, seed 42, WHU)
+=======================================================
+Budget B:        3,450 optimiser steps (Mass seed42 baseline budget)
+Best epoch:      5 (stopped mid-epoch 6 at exactly 3,450 steps)
+Best val IoU:    0.8173
+Wall time:       ~19 min (1051.2s train+val + test eval; scheduler stepped per optimiser step)
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.8015  (F1 0.8898)
+  inria: 0.2453  (F1 0.3939)
+  mass : 0.3279  (F1 0.4938)
+
+Comparison vs full WHU baseline (50 epochs, 29,008 steps): whu 0.8624 ->
+  0.8015 at 12% of the budget.
+
+Outputs: runs/equal_budget/unet_whu_steps3450/{config.json, log.csv, best.pt,
+last.pt, results.json}.
