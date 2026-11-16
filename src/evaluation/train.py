@@ -48,6 +48,23 @@ class BCEDice(nn.Module):
         return self.bce(logits, target) + dice_loss(logits, target)
 
 
+class FocalDice(nn.Module):
+    """Focal loss (gamma=2.0 on sigmoid probabilities, averaged over all batch
+    pixels) + the same soft Dice term as BCEDice."""
+
+    def __init__(self, gamma=2.0, eps=1.0):
+        super().__init__()
+        self.gamma = gamma
+        self.eps = eps
+
+    def forward(self, logits, target):
+        p = torch.sigmoid(logits)
+        ce = -(target * torch.log(p + self.eps) + (1 - target) * torch.log(1 - p + self.eps))
+        pt = p * target + (1 - p) * (1 - target)
+        focal = ((1 - pt) ** self.gamma * ce).mean()
+        return focal + dice_loss(logits, target)
+
+
 def set_seed(seed):
     random.seed(seed)
     np.random.seed(seed)
@@ -93,6 +110,9 @@ def make_args_parser():
     p.add_argument("--subset_seed", type=int, default=42,
                    help="seed for the --subset_size draw (chosen tile names are written to "
                         "subset_tiles.txt in the run folder)")
+    p.add_argument("--loss", default="bce_dice", choices=["bce_dice", "focal_dice"],
+                   help="loss function: 'bce_dice' (baseline) or 'focal_dice' "
+                        "(focal loss gamma 2.0 + same Dice term)")
     return p
 
 
@@ -224,7 +244,10 @@ def main(argv=None):
                          num_workers=args.num_workers, seed=args.seed)
     print(f"train tiles: {len(train_ds)}, validation tiles: {len(val_ds)}")
 
-    criterion = BCEDice()
+    if args.loss == "focal_dice":
+        criterion = FocalDice()
+    else:
+        criterion = BCEDice()
     optimizer = build_optimizer(args.optimizer, model, args.lr, args.weight_decay)
     scheduler = build_scheduler(args.scheduler, optimizer, args.epochs, steps=args.max_steps)
     scaler = torch.amp.GradScaler("cuda", enabled=(args.amp and device.type == "cuda"))

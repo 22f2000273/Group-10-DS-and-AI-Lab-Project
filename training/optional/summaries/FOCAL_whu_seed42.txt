@@ -1,0 +1,18 @@
+Focal-loss run: FOCAL_whu_seed42 (focal+Dice, Protocol A, seed 42)
+=====================================================================
+ALTERNATIVE LOSS COMPARISON — not part of the main baseline matrix.
+
+Loss:           focal (gamma 2.0) + soft Dice
+Best epoch:     2 (early-stopped at 12; patience 10)
+Best val IoU:   0.6500
+Wall time:      ~35 min
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.6314  (F1 0.7740)   [baseline BCE+Dice: 0.8624]
+  inria: 0.1281  (F1 0.2271)   [baseline BCE+Dice: 0.3677]
+  mass : 0.1699  (F1 0.2904)   [baseline BCE+Dice: 0.3959]
+
+Focal+Dice performs WORSE than BCE+Dice on every test set when trained
+on WHU — dramatic drop (~0.23 IoU in-domain).
+
+Outputs: runs/optional/FOCAL_whu_seed42/.

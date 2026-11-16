@@ -1,0 +1,8 @@
+run_id,part,train_dataset,change_vs_baseline,seed,best_epoch,best_val_iou,iou_whu,iou_inria,iou_mass,wall_time_min,status
+variant_dryrun_TEST,0,whu,smoke_test_only,42,,,,,,,DONE
+variant_mass_seed42,1,mass,smp_unet_resnet34_pretrained,42,42,0.6620,0.5960,0.2169,0.6808,6,DONE
+variant_whu_seed42,1,whu,smp_unet_resnet34_pretrained,42,49,0.8951,0.8593,0.4229,0.3610,40,DONE
+variant_inria_seed42,1,inria,smp_unet_resnet34_pretrained,42,49,0.7400,0.6656,0.7224,0.3246,40,DONE
+focal_mass_seed42,2,mass,focal_dice_loss,42,11,0.5698,0.4266,0.1563,0.5279,8,DONE
+focal_whu_seed42,2,whu,focal_dice_loss,42,2,0.6500,0.6314,0.1281,0.1699,35,DONE
+focal_inria_seed42,2,inria,focal_dice_loss,42,48,0.5780,0.4725,0.5633,0.2738,330,DONE

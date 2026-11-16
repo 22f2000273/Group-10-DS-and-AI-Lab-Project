@@ -1,0 +1,18 @@
+VARIANT run: smp_unet_whu_seed42 (U-Net + pre-trained ResNet-34 encoder, Protocol A, seed 42)
+================================================================================
+COMPARISON ONLY — not part of the main baseline matrix.
+
+Params:           24,436,369
+Best epoch:       49 (of 50)
+Best val IoU:     0.8951
+Wall time:        ~40 min (45.9s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.8593  (F1 0.9243)   [baseline UNet: 0.8624]
+  inria: 0.4229  (F1 0.5944)   [baseline UNet: 0.3677]
+  mass : 0.3610  (F1 0.5305)   [baseline UNet: 0.3959]
+
+About equal in-domain on WHU (0.8593 vs 0.8624), clearly better transfer
+to Inria (+0.055), slightly worse to Mass.
+
+No incidents. Outputs: runs/optional/VARIANT_smp_unet_whu_seed42/.

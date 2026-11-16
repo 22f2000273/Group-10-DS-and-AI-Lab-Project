@@ -1,0 +1,18 @@
+VARIANT run: smp_unet_inria_seed42 (U-Net + pre-trained ResNet-34 encoder, Protocol A, seed 42)
+================================================================================
+COMPARISON ONLY — not part of the main baseline matrix.
+
+Params:           24,436,369
+Best epoch:       49 (of 50)
+Best val IoU:     0.7400
+Wall time:        ~40 min (~103s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  inria: 0.7224  (F1 0.8389)   [baseline UNet: 0.7169]
+  whu  : 0.6656  (F1 0.7988)   [baseline UNet: 0.6968]
+  mass : 0.3246  (F1 0.4901)   [baseline UNet: 0.3052]
+
+The pre-trained ResNet-34 variant BEATS the from-scratch baseline on all
+three test sets when trained on Inria too.
+
+No incidents. Outputs: runs/optional/VARIANT_smp_unet_inria_seed42/.

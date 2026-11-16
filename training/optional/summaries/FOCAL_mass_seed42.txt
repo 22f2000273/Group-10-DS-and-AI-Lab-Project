@@ -1,0 +1,18 @@
+Focal-loss run: FOCAL_mass_seed42 (focal+Dice, Protocol A, seed 42)
+=====================================================================
+ALTERNATIVE LOSS COMPARISON — not part of the main baseline matrix.
+
+Loss:           focal (gamma 2.0) + soft Dice (same epsilon as baseline)
+Best epoch:     11 (early-stopped at 21; patience 10)
+Best val IoU:   0.5698
+Wall time:      ~8 min (446.4s train+val + test eval; ~20s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  mass : 0.5279  (F1 0.6911)   [baseline BCE+Dice: 0.6665]
+  whu  : 0.4266  (F1 0.5981)   [baseline BCE+Dice: 0.5687]
+  inria: 0.1563  (F1 0.2703)   [baseline BCE+Dice: 0.1995]
+
+Focal+Dice performs WORSE than BCE+Dice on every test set when trained
+on Mass — large cross-dataset degradation too.
+
+Outputs: runs/optional/FOCAL_mass_seed42/.
