@@ -1,0 +1,23 @@
+Focal-loss run (FIXED loss): FOCALFIX_whu_seed42 (focal+Dice, Protocol A, seed 42)
+===================================================================================
+ALTERNATIVE LOSS COMPARISON — not part of the main baseline matrix.
+
+Re-run after fixing the FocalDice bug (Dice eps=1.0 leaked into the focal
+log terms). See FOCALFIX_mass_seed42.txt for the fix + sanity check.
+
+Loss:           focal (gamma 2.0) + soft Dice (FIXED)
+Best epoch:     45 (of 50)
+Best val IoU:   0.8664
+Optimiser steps: 29,600
+Wall time:      ~2.6 h (8936.8s train+val + test eval; 178.5s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  whu  : 0.8509  (F1 0.9194)   [baseline BCE+Dice: 0.8624]
+  inria: 0.3262  (F1 0.4919)   [baseline BCE+Dice: 0.3677]
+  mass : 0.3759  (F1 0.5464)   [baseline BCE+Dice: 0.3959]
+
+With the fix, focal+Dice comes close to the baseline on WHU (−0.0115
+in-domain) but remains slightly below it on inria and mass.
+Compare buggy focal WHU: 0.6314 in-domain — the fix recovered +0.22 IoU.
+
+Outputs: runs/optional/FOCALFIX_whu_seed42/.

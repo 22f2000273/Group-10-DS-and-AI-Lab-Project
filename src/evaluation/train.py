@@ -50,16 +50,19 @@ class BCEDice(nn.Module):
 
 class FocalDice(nn.Module):
     """Focal loss (gamma=2.0 on sigmoid probabilities, averaged over all batch
-    pixels) + the same soft Dice term as BCEDice."""
+    pixels) + the same soft Dice term as BCEDice. The log terms use a tiny
+    epsilon (1e-7) — NOT the Dice smoothing eps=1.0, which would make the
+    focal term negative."""
 
-    def __init__(self, gamma=2.0, eps=1.0):
+    def __init__(self, gamma=2.0, log_eps=1e-7):
         super().__init__()
         self.gamma = gamma
-        self.eps = eps
+        self.log_eps = log_eps
 
     def forward(self, logits, target):
         p = torch.sigmoid(logits)
-        ce = -(target * torch.log(p + self.eps) + (1 - target) * torch.log(1 - p + self.eps))
+        ce = -(target * torch.log(p.clamp_min(self.log_eps))
+               + (1 - target) * torch.log((1 - p).clamp_min(self.log_eps)))
         pt = p * target + (1 - p) * (1 - target)
         focal = ((1 - pt) ** self.gamma * ce).mean()
         return focal + dice_loss(logits, target)
@@ -283,6 +286,11 @@ def main(argv=None):
             with torch.autocast(device_type=device.type, enabled=(scaler.is_enabled())):
                 logits = model(img)
                 loss = criterion(logits, msk)
+            if not torch.isfinite(loss):
+                raise RuntimeError(
+                    f"non-finite batch loss ({loss.item()}) at epoch {epoch}, "
+                    f"batch {n_batches + 1} — stopping training"
+                )
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()

@@ -1,0 +1,26 @@
+Focal-loss run (FIXED loss): FOCALFIX_mass_seed42 (focal+Dice, Protocol A, seed 42)
+=====================================================================================
+ALTERNATIVE LOSS COMPARISON — not part of the main baseline matrix.
+
+Re-run after fixing the FocalDice bug: the Dice smoothing eps=1.0 leaked
+into the focal log terms (log(p+1.0)), making the focal term negative.
+Fixed: log terms now use tiny eps (clamp_min 1e-7); dice_loss untouched
+(eps=1.0 correct there). Sanity check passed: perfect->focal 0.000000,
+wrong->8.79, 200 random batches never negative. NaN/inf guard added to
+the training loop (stops and reports on non-finite batch loss).
+
+Old buggy run kept at runs/optional/FOCAL_mass_seed42/ (INVALID results).
+
+Loss:           focal (gamma 2.0) + soft Dice (FIXED)
+Best epoch:     47 (of 50)
+Best val IoU:   0.6550
+Wall time:      ~18 min (1038.5s train+val + test eval; 20.4s/epoch)
+
+Test IoU (best.pt, threshold 0.5):
+  mass : 0.6683  (F1 0.8012)   [baseline BCE+Dice: 0.6665]
+  whu  : 0.5789  (F1 0.7333)   [baseline BCE+Dice: 0.5687]
+  inria: 0.1857  (F1 0.3106)   [baseline BCE+Dice: 0.1995]
+
+With the fix, focal+Dice is close to the baseline on all three test sets (mass +0.0018, whu +0.0102, inria -0.0138) — all within seed-to-seed variation.
+
+Outputs: runs/optional/FOCALFIX_mass_seed42/.
